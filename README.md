@@ -1,10 +1,11 @@
 # Spring-Web-Board-Project
-### 
-`
+### Orcle Table
+
 `
 create sequence seq_board;--고유번호 시퀀스
 `
-`
+
+
 create table tbl_board (
 bno number(10,0),
 title varchar2(200) not null,
