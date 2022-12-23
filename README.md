@@ -1,5 +1,6 @@
 # Spring-Web-Board-Project
-
+### 
+`
 `
 create sequence seq_board;--고유번호 시퀀스
 `
