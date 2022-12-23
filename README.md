@@ -5,6 +5,7 @@
 create sequence seq_board;--고유번호 시퀀스
 ```
 <hr/>
+
 ```create table tbl_board (
 bno number(10,0), --고유번호
 title varchar2(200) not null, --제목
@@ -13,6 +14,7 @@ writer varchar2(50) not null, --작성자
 regdate date default sysdate, --생성시간
 updatedate date default sysdate --수정시간
 );```
+
 <hr/>
 ```
 alter table tbl_board add constraint pk_board
