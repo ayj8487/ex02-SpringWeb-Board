@@ -33,7 +33,28 @@
 			select seq_board.nextval from dual		
 		</selectKey>
 	
-		insert into tbl_board (bno,title,content,writer)
-		values (#{bno},#{title},#{content},#{writer})
+			insert into tbl_board (bno,title,content,writer)
+			values (#{bno},#{title},#{content},#{writer})
 	</insert>
+	
+	<!-- 게시글 조회 -->
+	<select id="read" resultType="org.zerock.domain.BoardVO">
+		select * from tbl_board where bno= #{bno}
+	</select>
+	
+	<!-- 게시글 삭제 -->
+	<delete id="delete">
+		delete from tbl_board where bno = #{bno}
+	</delete>
+	
+	<!-- 게시글 수정 -->
+	<!-- 수정시간을 현재시간으로,  -->
+	<update id="update">
+		update tbl_board
+			set title = #{title},
+			content = #{content},
+			writer = #{writer},
+			updateDate = sysdate
+		where bno = #{bno}
+	</update>
 </mapper>

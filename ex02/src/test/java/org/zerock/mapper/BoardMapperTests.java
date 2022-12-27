@@ -24,6 +24,7 @@ public class BoardMapperTests {
 	public void testGetList() {
 		mapper.getList().forEach(board -> log.info(board));
 	}
+/*
 	// 게시물 등록 테스트 (insert)
 	@Test
 	public void testInsert() {
@@ -47,5 +48,35 @@ public class BoardMapperTests {
 		
 		mapper.insertSelectKey(board);
 		log.info(board);
+	}
+*/	
+	// 존재하는 게시물 번호로 테스트
+	@Test
+	public void testRead() {
+		BoardVO board = mapper.read(5L);
+		
+		log.info(board);
+	}
+/*	
+	// 게시물 삭제 테스트
+	// 정상적으로 삭제되면 1 그렇지 않으면 0이 출력되게끔
+	@Test
+	public void TestDelete() {
+		log.info("DELETE COUNT :" + mapper.delete(3L));
+	}
+*/
+	
+	//게시물 수정 테스트 , 실행 전 게시글 존재하는지 확인
+	@Test
+	public void TestUpdate() {
+		BoardVO board = new BoardVO();
+		
+		board.setBno(5L);
+		board.setTitle("수정 제목22");
+		board.setContent("수정 내용22");
+		board.setWriter("update002");
+	
+		int count = mapper.update(board);
+		log.info("UPDATE COUNT : " + count);
 	}
 }
