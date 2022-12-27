@@ -18,5 +18,22 @@
 		select * from tbl_board where bno > 0 
 		]]>
 	</select>
-
+	
+	<!-- 게시물 등록 -->
+	<!-- insert만 처리되고 생성된PK (bno) 값을 알 필요가 없는경우 -->
+	<insert id="insert">
+		insert into tbl_board (bno,title,content,writer)
+		values (seq_board.nextval, #{title}, #{content}, #{writer})
+	</insert>
+	
+	<!-- insert문이 실행되고 생성된PK 값을 알야야 하는 경우 -->
+	<!-- selectKey 라는 mybatis 어노테이션을 이용해서 pk값을 미리(before) 특정한이름으로 보관  -->
+	<insert id="insertSelectKey">
+		<selectKey keyProperty="bno" order="BEFORE" resultType="long">
+			select seq_board.nextval from dual		
+		</selectKey>
+	
+		insert into tbl_board (bno,title,content,writer)
+		values (#{bno},#{title},#{content},#{writer})
+	</insert>
 </mapper>
