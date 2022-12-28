@@ -36,4 +36,6 @@
 	<!-- base package 속성은 지정된 패키지안에 모든 어노테이션을 찾아 처리함 -->
 	<mybatis-spring:scan base-package="org.zerock.mapper"/>
 
+	<!-- 패키지 스캔 -->
+	<context:component-scan base-package="org.zerock.service"></context:component-scan>
 </beans>
