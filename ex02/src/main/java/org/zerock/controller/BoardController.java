@@ -78,5 +78,9 @@ public class BoardController {
 			rttr.addFlashAttribute("result","success");
 		}
 		return "redirect:/board/list";
-}
+	}
+	// 작성 페이지 이동
+	@GetMapping("/register")
+	public void register() {
+	}
 }
