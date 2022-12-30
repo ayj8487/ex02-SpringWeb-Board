@@ -17,6 +17,10 @@ import lombok.extern.log4j.Log4j;
 @RequestMapping("/board/*") // "/board/" 로 시작하는 모든 처리를 BoardController 가 하도록 지정
 @AllArgsConstructor
 @Log4j
+/*
+'/board/list' 를 실행시 BoardController는 Model을 이용해서 게시물의 목록을 'list'라는 이름으로 담아서
+전달했으므로 list.jsp에서는 이를 출력한다. list.jsp의 출력은 JSTL 을 이용한다.
+*/
 public class BoardController {
 	// BoardController는 BoardService 에 의존적이므로 @AllArgsConstructor를 이용해서 생성자 자동주입
 	// 만약 생성자를 만들지 않을 경우 @Setter(onMethod_ = @Autowired) 처리
