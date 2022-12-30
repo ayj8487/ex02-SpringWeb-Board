@@ -37,7 +37,8 @@ public class BoardController {
 		model.addAttribute("list", service.getList());
 	}
 	// 게시물 등록
-	//String  타입으로 지정하고 RedirectAttributes 를 파라미터로 지정
+	// String  타입으로 지정하고 RedirectAttributes 를 파라미터로 지정
+	// RedirectAttributes의 addFlashAttribute()는 일회성으로 데이터 전달(도배 방지) 
 	@PostMapping("/register")
 	public String register(BoardVO board, RedirectAttributes rttr) {
 		log.info("regist : " + board);
