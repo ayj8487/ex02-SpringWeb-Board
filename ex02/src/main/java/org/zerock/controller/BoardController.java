@@ -50,10 +50,11 @@ public class BoardController {
 		return "redirect:/board/list"; //redirect: 접두어 사용시 내부적으로 response.secdRedirect() 처리
 	}
 	// 게시물 조회
-	//bno 값을 더 명시적으로 처리하기위해 @RequestParam사용, 화면쪽으로 해당 번호의 게시물을 전달해야하므로 Model파라미터 지정
-	@GetMapping("/get")
+	// bno 값을 더 명시적으로 처리하기위해 @RequestParam사용, 화면쪽으로 해당 번호의 게시물을 전달해야하므로 Model파라미터 지정
+	// 조회 페이지는 수정삭제 페이지와 같기 때문에 GetMapping 경로 다중으로 수정(GetMapping,PostMapping 은 URL을 배열로 처리할 수 있음)
+	@GetMapping({"/get", "/modify"})
 	public void get(@RequestParam("bno") Long bno, Model model) { 
-		log.info("/get");
+		log.info("/get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	// 게시물 수정

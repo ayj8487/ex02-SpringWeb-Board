@@ -41,7 +41,10 @@
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<td><c:out value="${board.bno}" /></td>
-							<td><c:out value="${board.title}" /></td>
+							<!--<a>태그 속성 target="_blank" 으로 전환시 조회페이지 새창 으로 이동-->
+							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'> 
+								<c:out value="${board.title}"/>							
+							</a></td>
 							<td><c:out value="${board.writer}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></td>
@@ -89,14 +92,17 @@
 		한번도 사용된적 없다면 번호 호출, 그렇지않다면 ''빈값 반환 -->
 <!-- checkModal() 함수는 파라미터에 따라 모달창을 보여주거나 내용을 수정한 뒤 보이도록 설계 -->		
 <script type="text/javascript">
-	$(document).ready(function() { //modal 창 띄우기
+	$(document).ready(function() { //modal 창 띄우기 js
 		var result = '<c:out value="${result}"/>';
 
 		checkModal(result);
+
+		//modal 창이 /board/list로 이동할때만 동작하게 window.history 조작, || history.state 추가
+		history.replaceState({}, null, null);
 		
 		function checkModal(result){
-			if (result == ''){
-				return;
+			if (result === '' || history.state ){  
+				return;			 
 			} 	
 			if (parseInt(result) > 0 ){
 				$(".modal-body").html("게시글 "+ parseInt(result) + " 번이 등록 되었습니다.");
