@@ -59,6 +59,7 @@
 				<button type="submit" data-oper='modify' class="btn btn-default" >Modify</button>
 				<button type="submit" data-oper='remove' class="btn btn-default" >Remove</button>
 				<button type="submit" data-oper='list'  class="btn btn-info" >List</button>
+			
 			</form>				
 			</div>
 			<!--  end panel-body -->
