@@ -1,11 +1,14 @@
 package org.zerock.mapper;
 
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -24,6 +27,7 @@ public class BoardMapperTests {
 	public void testGetList() {
 		mapper.getList().forEach(board -> log.info(board));
 	}
+
 /*
 	// 게시물 등록 테스트 (insert)
 	@Test
@@ -49,7 +53,7 @@ public class BoardMapperTests {
 		mapper.insertSelectKey(board);
 		log.info(board);
 	}
-*/	
+
 	// 존재하는 게시물 번호로 테스트
 	@Test
 	public void testRead() {
@@ -57,14 +61,13 @@ public class BoardMapperTests {
 		
 		log.info(board);
 	}
-/*	
+	
 	// 게시물 삭제 테스트
 	// 정상적으로 삭제되면 1 그렇지 않으면 0이 출력되게끔
 	@Test
 	public void TestDelete() {
 		log.info("DELETE COUNT :" + mapper.delete(3L));
 	}
-*/
 	
 	//게시물 수정 테스트 , 실행 전 게시글 존재하는지 확인
 	@Test
@@ -78,5 +81,15 @@ public class BoardMapperTests {
 	
 		int count = mapper.update(board);
 		log.info("UPDATE COUNT : " + count);
+	}
+*/	
+	// 게시물목록 페이징 테스트
+	// Criteria 클래스에서 생성된 객체는 pageNum은 1, amount는 10 이라는 기본값을 가지므로 별도의 파라미터 없이 생성
+	@Test
+	public void testPaging() {
+		Criteria cri = new  Criteria();
+		
+		List<BoardVO> list = mapper.getListWithPaging(cri);
+		list.forEach(board -> log.info(board));
 	}
 }
