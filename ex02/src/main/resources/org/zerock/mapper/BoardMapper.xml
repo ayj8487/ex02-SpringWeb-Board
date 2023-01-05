@@ -23,6 +23,7 @@
 	<!-- CDATA은 xml 에서 특수문자를 사용하기 위해서 사용 -->
 	<!-- sql문 힌트 (/*aaa*/)와 rownum(sql결과 넘버링) 을 인라인 뷰(다중select)로 처리 -->	
 	<!-- rownum 값은 1 이상의 값이어야 동작한다 -->
+	<!-- pageNum(페이지번호) , amount(데이터 수) 로 조절되는 값 -->
 	<select id="getListWithPaging" resultType="org.zerock.domain.BoardVO">
 		<![CDATA[
 		select bno, title, content, writer, regdate, updatedate 

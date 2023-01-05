@@ -23,10 +23,10 @@ public class BoardMapperTests {
 	private BoardMapper mapper;
 	
 	// 게시물 리스트 테스트
-	@Test
-	public void testGetList() {
-		mapper.getList().forEach(board -> log.info(board));
-	}
+//	@Test
+//	public void testGetList() {
+//		mapper.getList().forEach(board -> log.info(board));
+//	}
 
 /*
 	// 게시물 등록 테스트 (insert)
@@ -90,6 +90,6 @@ public class BoardMapperTests {
 		Criteria cri = new  Criteria();
 		
 		List<BoardVO> list = mapper.getListWithPaging(cri);
-		list.forEach(board -> log.info(board));
+		list.forEach(board -> log.info(board.getBno()));
 	}
 }
