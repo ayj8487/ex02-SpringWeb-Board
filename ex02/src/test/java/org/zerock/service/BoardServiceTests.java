@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 import lombok.Setter;
 import lombok.extern.log4j.Log4j;
@@ -45,10 +46,10 @@ public class BoardServiceTests {
 //	}
 //	
 	// 게시물 조회 테스트
-	@Test
-	public void testGet() {
-		log.info(service.get(1L));
-	}
+//	@Test
+//	public void testGet() {
+//		log.info(service.get(1L));
+//	}
 	
 	// 게시물 삭제 테스트
 //	@Test 
@@ -58,14 +59,22 @@ public class BoardServiceTests {
 //	}
 	
 	// 게시물 수정 테스트
+//	@Test
+//	public void testUpdate() {
+//		BoardVO board = service.get(1L);
+//		
+//		if(board == null) {
+//			return;
+//		}
+//		board.setTitle("제목 수정 테스트");
+//		log.info("MODIFY RESULT :" + service.modify(board));
+//	}
+
+	// 게시물 리스트 테스트 (페이징)
 	@Test
-	public void testUpdate() {
-		BoardVO board = service.get(1L);
-		
-		if(board == null) {
-			return;
-		}
-		board.setTitle("제목 수정 테스트");
-		log.info("MODIFY RESULT :" + service.modify(board));
-	}
+	public void testGetList() {
+		service.getList(new Criteria(2, 10)).forEach(board -> log.info(board));
+	}	
 }
+
+

@@ -51,6 +51,14 @@ public class BoardControllerTests {
 //				.getModelMap());
 //	}
 	
+	// 게시물 리스트 테스트( 페이징 )
+	@Test
+	public void testListPaging() throws Exception{
+		log.info(mockMvc.perform(MockMvcRequestBuilders.get("/board/list")
+				.param("pageNum", "2")
+				.param("amount", "50"))
+				.andReturn().getModelAndView().getModelMap());
+	}
 	// 게시물 등록 테스트
 //	@Test
 //	//MockMvcRequestBuilders = POST방식의 호출

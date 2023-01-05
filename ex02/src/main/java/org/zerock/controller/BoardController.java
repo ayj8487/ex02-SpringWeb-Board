@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 import org.zerock.service.BoardService;
 
 import lombok.AllArgsConstructor;
@@ -30,12 +31,21 @@ public class BoardController {
 	
 	// 게시물 전체 목록
 	// list는 나중에 게시물목록을 전달해야 하므로 Model을 파라미터로 지정 하고 이를통해 BoardServiceImpl 객체의 getList() 결과를 담아 전달(addAttribute) 함
+//	@GetMapping("/list")
+//	public void list (Model model) { 
+//		log.info("list");
+//		
+//		model.addAttribute("list", service.getList());
+//	}
+	
+	// 게시물 전체 목록 (페이징)
+	// Criteria 클래스를 만들어두었기 때문에 편리하게 하나의 타입만으로 파라미터와 리턴타입을 사용 가능
 	@GetMapping("/list")
-	public void list (Model model) { 
-		log.info("list");
-		
-		model.addAttribute("list", service.getList());
+	public void list (Criteria cri, Model model) {
+		log.info("list : "+ cri);
+		model.addAttribute("list", service.getList(cri));
 	}
+	
 	// 게시물 등록
 	// String  타입으로 지정하고 RedirectAttributes 를 파라미터로 지정
 	// RedirectAttributes의 addFlashAttribute()는 일회성으로 데이터 전달(도배 방지) 

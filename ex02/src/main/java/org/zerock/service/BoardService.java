@@ -3,6 +3,7 @@ package org.zerock.service;
 import java.util.List;
 
 import org.zerock.domain.BoardVO;
+import org.zerock.domain.Criteria;
 
 public interface BoardService {
 	// 명백하게 select 를 해야되는 메서드는 리턴 타입을 지정할 수 있다.
@@ -17,5 +18,8 @@ public interface BoardService {
 	// 게시물 삭제
 	public boolean remove(Long bno);
 	// 게시물 리스트
-	public List<BoardVO> getList();
+//	public List<BoardVO> getList();
+
+	// 게시물 리스트(페이징)
+	public List<BoardVO>getList(Criteria cri);
 }
