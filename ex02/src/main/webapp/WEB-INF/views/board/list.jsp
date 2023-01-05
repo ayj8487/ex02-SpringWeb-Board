@@ -19,9 +19,10 @@
 <div class="row">
 	<div class="col-lg-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Board List Page
-				<button id='regBtn' type="button" class="btn btn-xs pull-right" >
-					<p style="color:#337ab7;">Register New Board</p>
+			<div class="panel-heading">
+				Board List Page
+				<button id='regBtn' type="button" class="btn btn-xs pull-right">
+					<p style="color: #337ab7;">Register New Board</p>
 				</button>
 			</div>
 
@@ -42,55 +43,96 @@
 						<tr>
 							<td><c:out value="${board.bno}" /></td>
 							<!--<a>태그 속성 target="_blank" 으로 전환시 조회페이지 새창 으로 이동-->
-							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'> 
-								<c:out value="${board.title}"/>							
+							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+									<c:out value="${board.title}" />
 							</a></td>
 							<td><c:out value="${board.writer}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.regdate}" /></td>
-							<td><fmt:formatDate pattern="yyyy-MM-dd" value="${board.updateDate}" /></td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${board.regdate}" /></td>
+							<td><fmt:formatDate pattern="yyyy-MM-dd"
+									value="${board.updateDate}" /></td>
 
 						</tr>
 					</c:forEach>
 
 				</table>
-
-				<!-- Modal창 추가 -->
-				<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
-					aria-labelledby="myModalLabel" aria-hidden="true">
-					<div class="modal-dialog">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal"
-									aria-hidden="true">&times;</button>
-								<h4 class="modal-title" id="myModalLabel">Modal Title</h4>
-							</div>
-							<div class="modal-body">처리가 완료 되었습니다.</div>
-							<div class="modal-footer">
-								<button type="button" class="btn btn-default"
-									data-dismiss="modal">Close</button>
-								<button type="button" class="btn btn-primary">Save
-									changes</button>
-							</div>
-						</div>
-						<!-- /.modal-content -->
-					</div>
-					<!-- /.modal-dialog -->
+				<!-- 검색 -->
+				<div class='row'>
+					<div class="col-lg-12"></div>
 				</div>
-				<!-- /.modal -->
 
+				<!-- 페이징 -->
+				<div class='pull-right'>
+					<ul class="pagination">
 
+						<!-- 이전 페이지 버튼 -->
+						<c:if test="${pageMaker.prev}">
+							<li class="paginate_button previous"><a
+								href="${pageMaker.startPage -1}">Previous</a></li>
+						</c:if>
+
+						<!-- 시작 페이지, 끝 페이지 -->
+						<c:forEach var="num" begin="${pageMaker.startPage}"
+							end="${pageMaker.endPage}">
+							<li class="paginate_button ${pageMaker.cri.pageNum == num ? "active":""} ">
+								<a href="${num}">${num}</a>
+							</li>
+						</c:forEach>
+
+						<!-- 다음 페이지버튼 -->
+						<c:if test="${pageMaker.next}">
+							<li class="paginate_button next"><a
+								href="${pageMaker.endPage +1}">Next</a></li>
+						</c:if>
+
+					</ul>
+				</div>
+				<!--  end Pagination -->
 			</div>
-			<!--  end panel-body -->
+			
+			<!--  페이징의 a태그가 동작하지 못 하도록 js처리-->
+			<form id='actionForm' action="/board/list" method="get"> 
+				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
+				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+			</form>
+
+			<!-- Modal창 추가 -->
+			<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-hidden="true">&times;</button>
+							<h4 class="modal-title" id="myModalLabel">Modal Title</h4>
+						</div>
+						<div class="modal-body">처리가 완료 되었습니다.</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-primary">Save
+								changes</button>
+						</div>
+					</div>
+					<!-- /.modal-content -->
+				</div>
+				<!-- /.modal-dialog -->
+			</div>
+			<!-- /.modal -->
+
+
+
 		</div>
-		<!-- end panel -->
+		<!--  end panel-body -->
 	</div>
+	<!-- end panel -->
 </div>
 <!-- /.row -->
 
 <!-- JQuery 처리 Modal -->
 <!-- addFlashAttribute 로 만들어졌기 때문에 Session 에 데이터 보관,  
 		한번도 사용된적 없다면 번호 호출, 그렇지않다면 ''빈값 반환 -->
-<!-- checkModal() 함수는 파라미터에 따라 모달창을 보여주거나 내용을 수정한 뒤 보이도록 설계 -->		
+<!-- checkModal() 함수는 파라미터에 따라 모달창을 보여주거나 내용을 수정한 뒤 보이도록 설계 -->
 <script type="text/javascript">
 	$(document).ready(function() { //modal 창 띄우기 js
 		var result = '<c:out value="${result}"/>';
@@ -112,9 +154,19 @@
 		}
 	$("#regBtn").on("click", function(){ // 등록페이지 이동
 		self.location ="/board/register";
-	});		
-		
+	});
+	
+	<!--  페이징의 a태그가 동작하지 못 하도록 js처리-->
+	var actionForm = $("#actionForm");
 
+	$(".paginate_button a").on("click",function(e) { //a 태그를 클릭해도 이동이 없도록 preventDefault 처리
+			e.preventDefault();
+
+			console.log('click');
+
+			actionForm.find("input[name='pageNum']").val($(this).attr("href")); // pageNum 값을 href 속성값으로 변경
+			actionForm.submit(); // actionForm 자체를 submit
+		});
 	});
 </script>
 
