@@ -42,19 +42,23 @@
 					<c:forEach items="${list}" var="board">
 						<tr>
 							<td><c:out value="${board.bno}" /></td>
+
+							<!--조회 페이지 이동시 현재 페이지 번호를 담을 수 있게 수정 -->							
+							<%-- <td><a href='/board/get?bno=<c:out value="${board.bno}"/>'><c:out value="${board.title}"/></a></td> --%>
+
 							<!--<a>태그 속성 target="_blank" 으로 전환시 조회페이지 새창 으로 이동-->
-							<td><a href='/board/get?bno=<c:out value="${board.bno}"/>'>
+							<td><a class='move' href='<c:out value="${board.bno}"/>'>
 									<c:out value="${board.title}" />
 							</a></td>
+
 							<td><c:out value="${board.writer}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.regdate}" /></td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${board.updateDate}" /></td>
-
 						</tr>
 					</c:forEach>
-
+							
 				</table>
 				<!-- 검색 -->
 				<div class='row'>
@@ -167,6 +171,16 @@
 			actionForm.find("input[name='pageNum']").val($(this).attr("href")); // pageNum 값을 href 속성값으로 변경
 			actionForm.submit(); // actionForm 자체를 submit
 		});
+	
+	$(".move").on("click", function(e){ // list에서 조회(get)페이지 이동시 현재 페이징번호 값을 갖기위해 추가
+										
+		e.preventDefault();
+		actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+ "'>");
+		actionForm.attr("action","/board/get");
+		actionForm.submit();
+
+	});
+	
 	});
 </script>
 
