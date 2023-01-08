@@ -175,6 +175,7 @@
 	$(".move").on("click", function(e){ // list에서 조회(get)페이지 이동시 현재 페이징번호 값을 갖기위해 추가
 										
 		e.preventDefault();
+	
 		actionForm.append("<input type='hidden' name='bno' value='"+ $(this).attr("href")+ "'>");
 		actionForm.attr("action","/board/get");
 		actionForm.submit();
