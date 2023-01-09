@@ -26,6 +26,10 @@
 
 		<form role="form" action="/board/modify" method="post">
 				
+				<!-- 수정/삭제 후 현재 페이징 목록을 가져오게 추가 -->
+				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
+				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
+
 				<div class="form-group">
 					<label>Bno</label> 
 					<input class="form-control" name="bno" value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -87,7 +91,16 @@ $(document).ready(function(){
 			// 수정된 내용은 클릭한 버튼이 List인경우 action 속성과 method속성을 변경하여 form태그의 모든 내용 삭제후 submit 진행,
 			// 이후 코드는 실행 되지 않게 return으로 제어
 			formObj.attr("action", "/board/list").attr("method","get");
+			
+			// 수정 페이지에서 리스트 이동시 현재 페이징번호를 갖게끔 처리
+			// 사용자가 리스트 이동시 form 태그의 필요한 부분만 잠시 복사 보관(clone)후 form 태그의 내용을 지움(empty). 이후에 필요한 태그들만 추가해서 list를 호출
+			var pageNumTag = $("input[name='pageNum']").clone();
+			var amountTag = $("input[name='amount']").clone();			
+
 			formObj.empty();
+			// 수정 페이지에서 리스트 이동시 현재 페이징번호를 갖게끔 처리
+			formObj.append(pageNumTag);
+			formObj.append(amountTag);
 		}
 		formObj.submit();
 	});

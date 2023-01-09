@@ -3,6 +3,7 @@ package org.zerock.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,33 +66,42 @@ public class BoardController {
 	// 게시물 조회
 	// bno 값을 더 명시적으로 처리하기위해 @RequestParam사용, 화면쪽으로 해당 번호의 게시물을 전달해야하므로 Model파라미터 지정
 	// 조회 페이지는 수정삭제 페이지와 같기 때문에 GetMapping 경로 다중으로 수정(GetMapping,PostMapping 은 URL을 배열로 처리할 수 있음)
+	// 페이징 목록으로 이동하기 위해 @ModelAttribute("cri")Criteria cri 추가
 	@GetMapping({"/get", "/modify"})
-	public void get(@RequestParam("bno") Long bno, Model model) { 
+	public void get(@RequestParam("bno") Long bno,@ModelAttribute("cri")Criteria cri, Model model) { 
 		log.info("/get or modify");
 		model.addAttribute("board",service.get(bno));
 	}
 	// 게시물 수정
 	// 변경된 내용을 수집하여 BoardVO 파라미터로 처리하고 BoardService를 호출
 	// 수정 작업을 시작하는 화면의 경우 GET방식이지만 실제 작업은 POST이기에 POSTMapping사용
+	// @ModelAttribute 는 Model에서 데이터를 지정한 이름으로 담아줌
 	@PostMapping("/modify")
-	public String modify(BoardVO board, RedirectAttributes rttr) {
+	public String modify(BoardVO board,@ModelAttribute("cri")Criteria cri, RedirectAttributes rttr) {
 		log.info("modify :" + board);
 		
 		//수정 여부를 boolean으로 처리하므로 이를 성공한경우에만 RedirectAttributes에 추가
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		// 수정 후 현재 페이징 넘버를 가져와 파라미터 변경후 처리
+		rttr.addAttribute("pageNum",cri.getPageNum());
+		rttr.addAttribute("amount",cri.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	// 게시물 삭제
 	// 삭제는 반드시 post 방식으로만 처리,
 	// remove()메서드로 삭제 시킨 후 이동할 페이지가 필요하기에 RedirectAttributes 파라미터 사용
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, RedirectAttributes rttr) {
+	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
 		log.info("remove :" + bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		rttr.addAttribute("pageNum", cri.getPageNum());
+		rttr.addAttribute("amount", cri.getAmount());
+		
 		return "redirect:/board/list";
 	}
 	// 작성 페이지 이동
