@@ -11,6 +11,11 @@
 <!-- 	select 태그의 경우 resultType 속성을가지는데, 이 값은 인터페이스에 선언된 메서드의 리턴타입과 동일해야함 -->
 <!-- 	resultType속성 값은 select 쿼리의 결과를 특정 클래스의 객체로 만들기위해 설정 -->
 
+	<!-- 전체 게시물 갯수 -->
+	<select id="getTotalCount" resultType="int">
+		select count(*) from tbl_board where bno > 0 
+	</select>
+	
 	<!-- 게시물 리스트 -->
 	<!-- CDATA은 xml 에서 부등호( > )를 사용하기 위해서 사용 -->
 	<select id="getList" resultType="org.zerock.domain.BoardVO">

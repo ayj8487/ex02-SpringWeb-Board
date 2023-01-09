@@ -22,4 +22,9 @@ public interface BoardService {
 
 	// 게시물 리스트(페이징)
 	public List<BoardVO>getList(Criteria cri);
+	
+	// 전체 게시물 수
+	// 굳이 Criteria 파라미터를 전달하지 않아도 되지만 목록과 전체데이터 개수를 일관성있게 하기 위해
+	public int getTotal(Criteria cri);
+	
 }

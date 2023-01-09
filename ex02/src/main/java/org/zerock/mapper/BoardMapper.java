@@ -33,4 +33,7 @@ public interface BoardMapper {
 	
 	// 게시글 수정
 	public int update(BoardVO board);
+	
+	// 전체 게시물의 수 (검색 기능 구현을 위해 Criteria 파라미터 전달)
+	public int getTotalCount(Criteria cri);
 }

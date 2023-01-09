@@ -27,13 +27,13 @@ public class BoardServiceImpl implements BoardService{
 		log.info("regist ------" + board);
 		mapper.insertSelectKey(board);
 	}
-	//게시물 조회
+	// 게시물 조회
 	@Override
 	public BoardVO get(Long bno) {
 		log.info("get ---------" + bno);
 		return mapper.read(bno);
 	}
-	//게시물 수정
+	// 게시물 수정
 	// return 값을 void로 설계 할수도 있지만 조금더 엄격하게 하기 위해
 	// boolean 타입으로 정상적으로 수정과 삭제가 이루어지면 1이라는 값을 반환하여 == 연산자를 이용해 참/거짓 으로 처리
 	@Override
@@ -41,24 +41,30 @@ public class BoardServiceImpl implements BoardService{
 		log.info("modify --------" + board);
 		return mapper.update(board) == 1;  
 	}
-	//게시물 삭제
+	// 게시물 삭제
 	@Override
 	public boolean remove(Long bno) {
 		log.info("remove---------" + bno);
 		return mapper.delete(bno) == 1;
 	}
-	//게시물 리스트
+	// 게시물 리스트
 //	@Override
 //	public List<BoardVO> getList() {
 //		log.info("get List ------");
 //		return mapper.getList();
 //	}
 	
-	//게시물 리스트 (페이징)
+	// 게시물 리스트 (페이징)
 	@Override
 	public List<BoardVO> getList(Criteria cri) {
 		log.info("get List with criteria : "+ cri);
 		return mapper.getListWithPaging(cri);
+	}
+	// 전체 게시물 수
+	@Override
+	public int getTotal(Criteria cri) {
+		log.info("get total count");
+		return mapper.getTotalCount(cri);
 	}
 
 }

@@ -48,6 +48,11 @@ public class BoardController {
 		model.addAttribute("list", service.getList(cri));
 		// pageMaker 라는 이름으로 PageDTO 클래스에서 객체를 만들어 Model에 담아줌
 		model.addAttribute("pageMaker", new PageDTO(cri, 123));
+		
+		// 전체 게시물 수를 호출하기 위해 추가
+		int total = service.getTotal(cri);
+		log.info("total : "+ total);
+		model.addAttribute("pageMaker", new PageDTO(cri, total));
 	}
 	
 	// 게시물 등록
