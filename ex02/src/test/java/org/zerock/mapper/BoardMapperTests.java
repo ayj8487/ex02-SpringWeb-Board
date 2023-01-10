@@ -86,14 +86,28 @@ public class BoardMapperTests {
 */	
 	// 게시물목록 페이징 테스트
 	// Criteria 클래스에서 생성된 객체는 pageNum은 1, amount는 10 이라는 기본값을 가지므로 별도의 파라미터 없이 생성
-	@Test
-	public void testPaging() {
-		Criteria cri = new  Criteria();
-		// 10개씩 3페이지
-		cri.setPageNum(3);
-		cri.setAmount(10);
-		
-		List<BoardVO> list = mapper.getListWithPaging(cri);
-		list.forEach(board -> log.info(board.getBno()));
-	}
+//	@Test
+//	public void testPaging() {
+//		Criteria cri = new  Criteria();
+//		// 10개씩 3페이지
+//		cri.setPageNum(3);
+//		cri.setAmount(10);
+//		
+//		List<BoardVO> list = mapper.getListWithPaging(cri);
+//		list.forEach(board -> log.info(board.getBno()));
+//	}
+	
+	// 페이징 + 검색 테스트
+	// Criteria 객체의 Type과 Keyword를 넣어서 원하는 SQL이 생성되는지 테스트
+	  @Test
+	  public void testSearch() {
+
+	    Criteria cri = new Criteria();
+	    cri.setKeyword("ㅎㅇ");
+	    cri.setType("TC");
+
+	    List<BoardVO> list = mapper.getListWithPaging(cri);
+
+	    list.forEach(board -> log.info(board));
+	  }
 }
