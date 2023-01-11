@@ -30,6 +30,11 @@
 				<input type='hidden' name='pageNum' value='<c:out value="${cri.pageNum}"/>'>
 				<input type='hidden' name='amount' value='<c:out value="${cri.amount}"/>'>
 
+				<!-- 검색 추가 후 키워드, 타입을 같이 넘김 -->	
+				<input type="hidden" name='keyword' value='<c:out value="${cri.keyword }"/>'>
+				<input type="hidden"  name='type' value='<c:out value="${cri.type }"/>'>
+
+
 				<div class="form-group">
 					<label>Bno</label> 
 					<input class="form-control" name="bno" value='<c:out value="${board.bno}"/>' readonly="readonly">
@@ -96,11 +101,20 @@ $(document).ready(function(){
 			// 사용자가 리스트 이동시 form 태그의 필요한 부분만 잠시 복사 보관(clone)후 form 태그의 내용을 지움(empty). 이후에 필요한 태그들만 추가해서 list를 호출
 			var pageNumTag = $("input[name='pageNum']").clone();
 			var amountTag = $("input[name='amount']").clone();			
+			
+			// 수정 페이지에서 리스트 이동시 현재 검색어와 타입을 가져가게끔 처리
+			var keywordTag = $("input[name='keyword']").clone();			
+			var typeTag = $("input[name='type']").clone();			
 
 			formObj.empty();
 			// 수정 페이지에서 리스트 이동시 현재 페이징번호를 갖게끔 처리
 			formObj.append(pageNumTag);
 			formObj.append(amountTag);
+			
+			// 수정 페이지에서 리스트 이동시 검색어와 타입을 갖게 처리
+			formObj.append(keywordTag);
+			formObj.append(typeTag);
+			
 		}
 		formObj.submit();
 	});

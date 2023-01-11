@@ -89,9 +89,14 @@ public class BoardController {
 		if(service.modify(board)) {
 			rttr.addFlashAttribute("result","success");
 		}
-		// 수정 후 현재 페이징 넘버를 가져와 파라미터 변경후 처리
+		// 수정 후 현재 페이징 넘버를 가져와 파라미터 변경후 리다이렉트에 포함시켜 처리
 		rttr.addAttribute("pageNum",cri.getPageNum());
 		rttr.addAttribute("amount",cri.getAmount());
+		
+		// 수정 후 현재 검색 키워드와 타입을 리다이렉트에 포함시켜 처리
+		rttr.addAttribute("keyword",cri.getKeyword());
+		rttr.addAttribute("type",cri.getType());
+		
 		
 		return "redirect:/board/list";
 	}
@@ -104,9 +109,14 @@ public class BoardController {
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
+		// 삭제 후 현재 페이징 넘버를 가져와 파라미터 변경후 리다이렉트에 포함시켜 처리
 		rttr.addAttribute("pageNum", cri.getPageNum());
 		rttr.addAttribute("amount", cri.getAmount());
-		
+
+		// 삭제 후 현재 검색 키워드와 타입을 리다이렉트에 포함시켜 처리
+		rttr.addAttribute("keyword",cri.getKeyword());
+		rttr.addAttribute("type",cri.getType());
+
 		return "redirect:/board/list";
 	}
 	// 작성 페이지 이동

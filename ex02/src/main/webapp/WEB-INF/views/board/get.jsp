@@ -51,6 +51,11 @@
 					<!-- 현재 목록리스트에 페이징된 번호를 같이 넘김 -->	
 					<input type="hidden" name='pageNum' value='<c:out value="${cri.pageNum }"/>'>
 					<input type="hidden"  name='amount' value='<c:out value="${cri.amount }"/>'>
+					
+					<!-- 검색 추가 후 키워드, 타입을 같이 넘김 -->	
+					<input type="hidden" name='keyword' value='<c:out value="${cri.keyword }"/>'>
+					<input type="hidden"  name='type' value='<c:out value="${cri.type }"/>'>
+
 				</form>
 				
 			</div>

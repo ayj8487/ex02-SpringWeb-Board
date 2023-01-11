@@ -61,22 +61,34 @@
 							
 				</table>
 				<!-- 검색 -->
+				<!-- 삼항 연산자를 이용해 selected라는 문자열을 이용해 검색 후에도 검색조건과 키워드 남기기 -->
 				<div class='row'>
 					<div class="col-lg-12">
-						<form id ='searchForm' action="/board/list" method="get">
+						<form id='searchForm' action="/board/list" method='get'>
 							<select name='type'>
-								<option value="">--</option>
-								<option value="T">제목</option>
-								<option value="C">내용</option>
-								<option value="W">작성자</option>
-								<option value="TC">제목 + 내용</option>
-								<option value="TW">제목 + 작성자</option>
-								<option value="TWC">제목 + 내용 + 작성자</option>
-							</select>
-							
-							<input type='text' name='keyword' />
-							<input type= 'hidden' name='pageNum' value='${pageMaker.cri.pageNum} '>
-							<input type= 'hidden' name='amount' value='${pageMaker.cri.amount} '>
+								<option value=""
+									<c:out value="${pageMaker.cri.type == null?'selected':''}"/>>--</option>
+								<option value="T"
+									<c:out value="${pageMaker.cri.type eq 'T'?'selected':''}"/>>제목</option>
+								<option value="C"
+									<c:out value="${pageMaker.cri.type eq 'C'?'selected':''}"/>>내용</option>
+								<option value="W"
+									<c:out value="${pageMaker.cri.type eq 'W'?'selected':''}"/>>작성자</option>
+								<option value="TC"
+									<c:out value="${pageMaker.cri.type eq 'TC'?'selected':''}"/>>제목
+									or 내용</option>
+								<option value="TW"
+									<c:out value="${pageMaker.cri.type eq 'TW'?'selected':''}"/>>제목
+									or 작성자</option>
+								<option value="TWC"
+									<c:out value="${pageMaker.cri.type eq 'TWC'?'selected':''}"/>>제목
+									or 내용 or 작성자</option>
+							</select> <input type='text' name='keyword'
+								value='<c:out value="${pageMaker.cri.keyword}"/>' /> <input
+								type='hidden' name='pageNum'
+								value='<c:out value="${pageMaker.cri.pageNum}"/>' /> <input
+								type='hidden' name='amount'
+								value='<c:out value="${pageMaker.cri.amount}"/>' />
 							<button class='btn btn-default'>Search</button>
 						</form>
 					</div>
@@ -111,10 +123,14 @@
 				<!--  end Pagination -->
 			</div>
 			
-			<!--  페이징의 a태그가 동작하지 못 하도록 js처리-->
+			<!-- 페이지이동 form (페이징의 a태그가 동작하지 못 하도록 js처리)-->
 			<form id='actionForm' action="/board/list" method="get"> 
 				<input type='hidden' name='pageNum' value='${pageMaker.cri.pageNum}'>
 				<input type='hidden' name='amount' value='${pageMaker.cri.amount}'>
+				
+				<!-- 검색 기능 추가후  페이지 이동시 검색조건과 키워드를 유지시켜주기 위해 추가 -->			
+				<input type='hidden' name='type' value='<c:out value="${ pageMaker.cri.type }"/>'> 
+				<input type='hidden' name='keyword' value='<c:out value="${ pageMaker.cri.keyword }"/>'>
 			</form>
 
 			<!-- Modal창 추가 -->
@@ -177,7 +193,7 @@
 		self.location ="/board/register";
 	});
 	
-	<!--  페이징의 a태그가 동작하지 못 하도록 js처리-->
+	// 페이징의 a태그가 동작하지 못 하도록 js처리
 	var actionForm = $("#actionForm");
 
 	$(".paginate_button a").on("click",function(e) { //a 태그를 클릭해도 이동이 없도록 preventDefault 처리
@@ -198,8 +214,34 @@
 		actionForm.submit();
 
 	});
-	
-	});
+	// 검색 버튼 제어 (form태그 전송 막음)
+
+	var searchForm = $("#searchForm");
+
+		$("#searchForm button").on(
+				"click",
+				function(e) {
+
+					if (!searchForm.find("option:selected")
+							.val()) {
+						alert("검색종류를 선택하세요");
+						return false;
+					}
+
+					if (!searchForm.find(
+							"input[name='keyword']").val()) {
+						alert("키워드를 입력하세요");
+						return false;
+					}
+
+					searchForm.find("input[name='pageNum']") // 검색 후 페이징 번호가 1이 되게
+							.val("1");
+					e.preventDefault();
+
+					searchForm.submit();
+
+				});
+		});
 </script>
 
 
