@@ -103,22 +103,35 @@ public class BoardController {
 	// 게시물 삭제
 	// 삭제는 반드시 post 방식으로만 처리,
 	// remove()메서드로 삭제 시킨 후 이동할 페이지가 필요하기에 RedirectAttributes 파라미터 사용
+//	@PostMapping("/remove")
+//	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
+//		log.info("remove :" + bno);
+//		if(service.remove(bno)) {
+//			rttr.addFlashAttribute("result","success");
+//		}
+//		// 삭제 후 현재 페이징 넘버를 가져와 파라미터 변경후 리다이렉트에 포함시켜 처리
+//		rttr.addAttribute("pageNum", cri.getPageNum());
+//		rttr.addAttribute("amount", cri.getAmount());
+//
+//		// 삭제 후 현재 검색 키워드와 타입을 리다이렉트에 포함시켜 처리
+//		rttr.addAttribute("keyword",cri.getKeyword());
+//		rttr.addAttribute("type",cri.getType());
+//
+//		return "redirect:/board/list";
+//	}
+	
+	// 게시물 삭제 (UriComponentsBuilder 를 이용 해서 검색조건과 페이징 유지 처리)
+	// getListLink() 를 이용한 게시물 삭제 로직(modify또한 기존 로직보다 코드를 줄일 수 있음)
+	// 주로 JavaScript를 사용 할 수 없는 상황에서 링크처리를 할때 사용	
 	@PostMapping("/remove")
-	public String remove(@RequestParam("bno") Long bno, @ModelAttribute("cri") Criteria cri, RedirectAttributes rttr) {
-		log.info("remove :" + bno);
+	public String remove(@RequestParam("bno") Long bno, Criteria cri, RedirectAttributes rttr) {
+		log.info("remove---" + bno);
 		if(service.remove(bno)) {
 			rttr.addFlashAttribute("result","success");
 		}
-		// 삭제 후 현재 페이징 넘버를 가져와 파라미터 변경후 리다이렉트에 포함시켜 처리
-		rttr.addAttribute("pageNum", cri.getPageNum());
-		rttr.addAttribute("amount", cri.getAmount());
-
-		// 삭제 후 현재 검색 키워드와 타입을 리다이렉트에 포함시켜 처리
-		rttr.addAttribute("keyword",cri.getKeyword());
-		rttr.addAttribute("type",cri.getType());
-
-		return "redirect:/board/list";
+		return "redirect:/board/list" + cri.getListLink();
 	}
+	
 	// 작성 페이지 이동
 	@GetMapping("/register")
 	public void register() {

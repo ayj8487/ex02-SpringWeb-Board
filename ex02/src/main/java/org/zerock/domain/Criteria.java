@@ -1,5 +1,7 @@
 package org.zerock.domain;
 
+import org.springframework.web.util.UriComponentsBuilder;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -38,6 +40,19 @@ public class Criteria { // 검색의 "기준"
 	// 검색시 MyBatis 동적태그(if, choose, trim, forEach 등) 를 배열로 처리하여 활용하기 위한 메서드 추가
 	public String[] getTypeArr() {
 		return type == null? new String[] {}: type.split("");
+	}
+	
+	// 검색조건 유지 파라미터 묶음 (modify,remove)에 대체 사용 가능
+	// UriComponentsBuilder 를 이용한 링크 생성 (매번 파라미터를 유지하는 일이 번거로울 때 용이함)
+	// 여러개의 파라미터들을 연결해서 URL의 형태로 만들어주는 기능
+	public String getListLink() {
+		UriComponentsBuilder builder = UriComponentsBuilder.fromPath("")
+			.queryParam("pageNum", this.pageNum)
+			.queryParam("amount",this.getAmount())
+			.queryParam("type", this.getType())
+			.queryParam("keyword", this.getKeyword());
+
+		return builder.toUriString();
 	}
 	
 
