@@ -1,7 +1,4 @@
 # Spring-Web-Board-Project
-### Story Board
-
-<hr />
 
 ### Orcle Table
 
