@@ -16,6 +16,32 @@
 	</properties>
 	<dependencies>
 
+	<!-- GoogleSON 라이브러리 -->
+	<!-- Java 인스턴스를 JSON 타입의 문자열로 변환(test코드 작성시 필요) -->
+	<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
+		<dependency>
+		    <groupId>com.google.code.gson</groupId>
+		    <artifactId>gson</artifactId>
+		    <version>2.8.2</version>
+		</dependency>
+
+	<!-- JSON 포맷 라이브러리 -->	
+	<!-- 브라우저에 객체를 JSON 포맷 문자열로 변환시켜 전송 -->
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.dataformat</groupId>
+		    <artifactId>jackson-dataformat-xml</artifactId>
+		    <version>2.9.6</version>
+		</dependency>
+		
+	<!-- JSON 코어 라이브러리 -->
+	<!-- JSON : 키 와 값으로 이루어진 경량데이터 표현 방식 -->
+	<!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+		<dependency>
+		    <groupId>com.fasterxml.jackson.core</groupId>
+		    <artifactId>jackson-databind</artifactId>
+		    <version>2.9.6</version>
+		</dependency>
 
 		<!-- 기존 log주석 후 추가 -->	
 		<dependency>
