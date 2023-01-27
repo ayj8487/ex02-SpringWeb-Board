@@ -28,7 +28,7 @@ primary key (bno);--board_pk
 
 - 더미데이터
 ```
-insert into tbl_board(bno, title, content, writer)
+insert into tbl_board(bno, title, content, writer) 
 values (seq_board.nextval, '테스트 제목','테스트 내용','user00'); --더미데이터
 ```
 
@@ -63,4 +63,5 @@ alter table tbl_reply add constraint pk_reply primary key (rno);
 alter table tbl_reply  add constraint fk_reply_board 
 foreign key (bno)  references  tbl_board (bno); 
 ```
+
 
