@@ -64,3 +64,4 @@ alter table tbl_reply  add constraint fk_reply_board
 foreign key (bno)  references  tbl_board (bno); 
 ```
 
+
